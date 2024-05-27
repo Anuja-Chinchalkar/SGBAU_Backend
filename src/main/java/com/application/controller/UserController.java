@@ -126,6 +126,11 @@ public class UserController
 
 		return "done";
 	}
+	@CrossOrigin(origins = LoginController.ApiURL)
+	@GetMapping("/createtransaction/{amount}")
+	public TransactiobDetails createtransaction(@PathVariable(name = "amount") Double amount){
+		return userService.createtransaction(amount);
+	}
 
 	@GetMapping("/getenrollmentstatus/{coursename}/{email}/{role}")
 	@CrossOrigin(origins = LoginController.ApiURL)
