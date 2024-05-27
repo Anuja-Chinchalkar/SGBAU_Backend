@@ -2,10 +2,13 @@ package com.application.services;
 
 import java.util.List;
 
+import com.application.model.TransactiobDetails;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.application.model.User;
 import com.application.repository.UserRepository;
+
 
 @Service
 public class UserService 
@@ -47,4 +50,5 @@ public class UserService
 	{
 		return (List<User>)userRepo.findProfileByEmail(email);
 	}
+
 }

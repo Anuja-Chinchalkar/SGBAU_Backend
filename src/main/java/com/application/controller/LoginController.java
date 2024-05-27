@@ -12,46 +12,51 @@ import com.application.services.ProfessorService;
 import com.application.services.UserService;
 
 @RestController
-public class LoginController 
+public class LoginController
 {
+
+	public static  final String ApiURL="http://localhost:4200";
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ProfessorService professorService;
-	
+
 	@GetMapping("/")
-    public String welcomeMessage()
-    {
-    	return "Welcome to Elearning Management system !!!";
-    }
-	
+	public String welcomeMessage()
+	{
+		return "Welcome to Elearning Management system !!!";
+	}
+
 	@PostMapping("/loginuser")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = ApiURL)
 	public User loginUser(@RequestBody User user) throws Exception
 	{
 		String currEmail = user.getEmail();
-		String currPassword = user.getPassword();
-		
+
+		String currPassword = RegistrationController.encrypt(user.getPassword());
+		System.out.println(currPassword);
+
 		User userObj = null;
 		if(currEmail != null && currPassword != null)
 		{
 			userObj = userService.fetchUserByEmailAndPassword(currEmail, currPassword);
+			userObj.setPassword(RegistrationController.decrypt(userObj.getPassword()));
 		}
 		if(userObj == null)
 		{
 			throw new Exception("User does not exists!!! Please enter valid credentials...");
-		}		
+		}
 		return userObj;
 	}
-	
+
 	@PostMapping("/loginprofessor")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = ApiURL)
 	public Professor loginDoctor(@RequestBody Professor professor) throws Exception
 	{
 		String currEmail = professor.getEmail();
 		String currPassword = professor.getPassword();
-		
+
 		Professor professorObj = null;
 		if(currEmail != null && currPassword != null)
 		{
@@ -60,7 +65,7 @@ public class LoginController
 		if(professorObj == null)
 		{
 			throw new Exception("Professor does not exists!!! Please enter valid credentials...");
-		}		
+		}
 		return professorObj;
 	}
 }

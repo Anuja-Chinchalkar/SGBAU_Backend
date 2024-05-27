@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+
+import com.application.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.model.Chapter;
-import com.application.model.Enrollment;
-import com.application.model.Professor;
-import com.application.model.User;
-import com.application.model.Wishlist;
 import com.application.services.ChapterService;
 import com.application.services.CourseService;
 import com.application.services.EnrollmentService;
@@ -53,15 +50,18 @@ public class UserController
 	private ChapterService chapterService;
 
 	@GetMapping("/userlist")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<User>> getUsers() throws Exception
 	{
 		List<User> users = userService.getAllUsers();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
-  @CrossOrigin(origins = "http://localhost:4200") @GetMapping("/getuser/{email}") public ResponseEntity<User> getUser(@PathVariable String email) throws Exception { User user=userService.fetchUserByEmail(email); return new ResponseEntity<User>(user, HttpStatus.OK); }
+	@CrossOrigin(origins = LoginController.ApiURL)
+	@GetMapping("/getuser/{email}")
+	public ResponseEntity<User> getUser(@PathVariable String email) throws Exception {
+		User user=userService.fetchUserByEmail(email); return new ResponseEntity<User>(user, HttpStatus.OK); }
 	@PostMapping("/enrollnewcourse/{email}/{role}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public String enrollNewCourse(@RequestBody Enrollment enrollment, @PathVariable String email, @PathVariable String role) throws Exception
 	{
 		String enrolledUserName = "",enrolledUserID = "";
@@ -128,7 +128,7 @@ public class UserController
 	}
 
 	@GetMapping("/getenrollmentstatus/{coursename}/{email}/{role}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<Set<String>> getEnrollmentStatus(@PathVariable String coursename, @PathVariable String email, @PathVariable String role) throws Exception
 	{
 		List<Enrollment> enrollments = enrollmentService.getAllEnrollments();
@@ -163,7 +163,7 @@ public class UserController
 	}
 
 	@PostMapping("/addtowishlist")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<Wishlist> addNewCourse(@RequestBody Wishlist wishlist) throws Exception
 	{
 		Wishlist wishlistObj = null;
@@ -172,7 +172,7 @@ public class UserController
 	}
 
 	@GetMapping("/getwishliststatus/{coursename}/{email}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<Set<String>> getWishlistStatus(@PathVariable String coursename, @PathVariable String email) throws Exception
 	{
 		List<Wishlist> wishlists = wishlistService.getAllLikedCourses();
@@ -193,7 +193,7 @@ public class UserController
 	}
 
 	@GetMapping("/getallwishlist")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Wishlist>> getAllWislist() throws Exception
 	{
 		List<Wishlist> Wishlists = wishlistService.getAllLikedCourses();
@@ -201,7 +201,7 @@ public class UserController
 	}
 
 	@GetMapping("/getwishlistbyemail/{email}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Wishlist>> getWishlistByEmail(@PathVariable String email) throws Exception
 	{
 		List<Wishlist> Wishlists = wishlistService.fetchByLikeduser(email);
@@ -209,7 +209,7 @@ public class UserController
 	}
 
 	@GetMapping("/getenrollmentbyemail/{email}/{role}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Enrollment>> getEnrollmentsByEmail(@PathVariable String email, @PathVariable String role) throws Exception
 	{
 		User userObj;
@@ -231,7 +231,7 @@ public class UserController
 	}
 
 	@GetMapping("/getchapterlistbycoursename/{coursename}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Chapter>> getChapterListByCoursename(@PathVariable String coursename) throws Exception
 	{
 		List<Chapter> chapterLists = chapterService.fetchByCoursename(coursename);
@@ -252,7 +252,7 @@ public class UserController
 	}
 
 	@GetMapping("/userprofileDetails/{email}")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<User>> getProfileDetails(@PathVariable String email) throws Exception
 	{
 		List<User> users = userService.fetchProfileByEmail(email);
@@ -260,15 +260,19 @@ public class UserController
 	}
 
 	@PutMapping("/updateuser")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<User> updateUserProfile(@RequestBody User user) throws Exception
 	{
 		User userobj = userService.updateUserProfile(user);
 		return new ResponseEntity<User>(userobj, HttpStatus.OK);
 	}
-
+//	@CrossOrigin(origins = LoginController.ApiURL)
+//	@GetMapping("/createtransaction/{amount}")
+//	public TransactiobDetails createtransaction(@PathVariable(name = "amount") Double amount){
+//		return userService.createtransaction(amount);
+//	}
 	@GetMapping("/gettotalusers")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Integer>> getTotalUsers() throws Exception
 	{
 		List<User> users = userService.getAllUsers();
@@ -278,7 +282,7 @@ public class UserController
 	}
 
 	@GetMapping("/gettotalenrollmentcount")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Integer>> getTotalEnrollmentcount() throws Exception
 	{
 		List<Enrollment> enrollments = enrollmentService.getAllEnrollments();
@@ -293,7 +297,7 @@ public class UserController
 	}
 
 	@GetMapping("/gettotalenrollments")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Integer>> getTotalEnrollments() throws Exception
 	{
 		List<Enrollment> enrollments = enrollmentService.getAllEnrollments();
