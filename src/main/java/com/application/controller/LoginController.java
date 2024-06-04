@@ -55,12 +55,13 @@ public class LoginController
 	public Professor loginDoctor(@RequestBody Professor professor) throws Exception
 	{
 		String currEmail = professor.getEmail();
-		String currPassword = professor.getPassword();
+		String currPassword = RegistrationController.encrypt(professor.getPassword());
 
 		Professor professorObj = null;
 		if(currEmail != null && currPassword != null)
 		{
 			professorObj = professorService.fetchProfessorByEmailAndPassword(currEmail, currPassword);
+			professorObj.setPassword(RegistrationController.decrypt(professorObj.getPassword()));
 		}
 		if(professorObj == null)
 		{

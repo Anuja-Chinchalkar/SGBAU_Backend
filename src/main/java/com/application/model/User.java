@@ -1,13 +1,15 @@
 package com.application.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.*;
 
 @Entity
-public class User 
+public class User
 {
 	@Id
 	private String email;
+
 	private String username;
 	private String userid;
 	private String mobile;
@@ -15,13 +17,24 @@ public class User
 	private String profession;
 	private String address;
 	private String password;
-	
-	public User() 
+
+//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private ImageEntity profileImage;
+
+//	public ImageEntity getProfileImage() {
+//		return profileImage;
+//	}
+//
+//	public void setProfileImage(ImageEntity profileImage) {
+//		this.profileImage = profileImage;
+//	}
+
+	public User()
 	{
 		super();
 	}
 
-	public User(String email, String username, String userid, String mobile, String gender, String profession, String address, String password) 
+	public User(String email, String username, String userid, String mobile, String gender, String profession, String address, String password)
 	{
 		super();
 		this.email = email;
@@ -34,12 +47,12 @@ public class User
 		this.password = password;
 	}
 
-	public String getEmail() 
+	public String getEmail()
 	{
 		return email;
 	}
 
-	public void setEmail(String email) 
+	public void setEmail(String email)
 	{
 		this.email = email;
 	}
@@ -49,67 +62,67 @@ public class User
 		return username;
 	}
 
-	public void setUsername(String username) 
+	public void setUsername(String username)
 	{
 		this.username = username;
 	}
 
-	public String getUserid() 
+	public String getUserid()
 	{
 		return userid;
 	}
 
-	public void setUserid(String userid) 
+	public void setUserid(String userid)
 	{
 		this.userid = userid;
 	}
 
-	public String getMobile() 
+	public String getMobile()
 	{
 		return mobile;
 	}
 
-	public void setMobile(String mobile) 
+	public void setMobile(String mobile)
 	{
 		this.mobile = mobile;
 	}
 
-	public String getGender() 
+	public String getGender()
 	{
 		return gender;
 	}
 
-	public void setGender(String gender) 
+	public void setGender(String gender)
 	{
 		this.gender = gender;
 	}
 
-	public String getProfession() 
+	public String getProfession()
 	{
 		return profession;
 	}
 
-	public void setProfession(String profession) 
+	public void setProfession(String profession)
 	{
 		this.profession = profession;
 	}
 
-	public String getAddress() 
+	public String getAddress()
 	{
 		return address;
 	}
 
-	public void setAddress(String address) 
+	public void setAddress(String address)
 	{
 		this.address = address;
 	}
 
-	public String getPassword() 
+	public String getPassword()
 	{
 		return password;
 	}
 
-	public void setPassword(String password) 
+	public void setPassword(String password)
 	{
 		this.password = password;
 	}

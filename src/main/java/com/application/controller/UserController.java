@@ -261,7 +261,30 @@ public class UserController
 	public ResponseEntity<List<User>> getProfileDetails(@PathVariable String email) throws Exception
 	{
 		List<User> users = userService.fetchProfileByEmail(email);
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+		if (users == null || users.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+
+		// Decrypt passwords for each user before returning the response
+		for (User user : users) {
+			String decryptedPassword =RegistrationController.decrypt(user.getPassword());
+			user.setPassword(decryptedPassword);
+		}
+
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+
+	@CrossOrigin(origins =LoginController.ApiURL)
+	@PostMapping("/resetpassword/{email}/{password}")
+	public ResponseEntity<User> resetpassword(@PathVariable String email,@PathVariable String password) throws Exception
+	{
+		User user=userService.fetchUserByEmail(email);
+		if(email!=null||password!=null){
+			String pass=RegistrationController.encrypt(password);
+			user.setPassword(pass);
+		}
+		userService.saveUser(user);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateuser")

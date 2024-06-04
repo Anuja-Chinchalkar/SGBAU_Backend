@@ -137,20 +137,50 @@ public class ProfessorController
 		al.add("rejected");
 		return new ResponseEntity<List<String>>(al,HttpStatus.OK);
 	}
+
+	@CrossOrigin(origins =LoginController.ApiURL)
+	@PostMapping("/resetProfessorpassword/{email}/{password}")
+	public ResponseEntity<Professor> resetpassword(@PathVariable String email,@PathVariable String password) throws Exception
+	{
+		Professor user=professorService.fetchProfessorByEmail(email);
+		if(email!=null||password!=null){
+			String pass=RegistrationController.encrypt(password);
+			user.setPassword(pass);
+		}
+		professorService.saveProfessor(user);
+		return new ResponseEntity<Professor>(user, HttpStatus.OK);
+	}
 	
 	@GetMapping("/professorprofileDetails/{email}")
 	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<List<Professor>> getProfileDetails(@PathVariable String email) throws Exception
 	{
+
 		List<Professor> professors = professorService.fetchProfileByEmail(email);
-		return new ResponseEntity<List<Professor>>(professors, HttpStatus.OK);
+		if (professors == null || professors.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+
+		// Decrypt passwords for each user before returning the response
+		for (Professor user : professors) {
+			String decryptedPassword =RegistrationController.decrypt(user.getPassword());
+			user.setPassword(decryptedPassword);
+		}
+
+		return new ResponseEntity<>(professors, HttpStatus.OK);
 	}
+
+
 	
 	@PutMapping("/updateprofessor")
 	@CrossOrigin(origins = LoginController.ApiURL)
 	public ResponseEntity<Professor> updateProfessorProfile(@RequestBody Professor professor) throws Exception
 	{
+		String currPassword = RegistrationController.encrypt(professor.getPassword());
+		System.out.println(currPassword);
+		professor.setPassword(currPassword);
 		Professor professorobj = professorService.updateProfessorProfile(professor);
+
 		return new ResponseEntity<Professor>(professorobj, HttpStatus.OK);
 	}
 	
