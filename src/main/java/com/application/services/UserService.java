@@ -2,8 +2,11 @@ package com.application.services;
 
 import java.util.List;
 
+import com.application.model.Chapter;
+import com.application.model.Review;
 import com.application.model.TransactiobDetails;
 
+import com.application.repository.ReviewRepository;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import org.json.JSONObject;
@@ -21,6 +24,17 @@ public class UserService
 	private static final String CURRENCY="INR";
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private ReviewRepository reviewrepo;
+
+	public Review addReview(Review review){
+		return  reviewrepo.save(review);
+	}
+
+	public List<Review> getAllReview()
+	{
+		return (List<Review>)reviewrepo.findAll();
+	}
 	
 	public User saveUser(User user)
 	{

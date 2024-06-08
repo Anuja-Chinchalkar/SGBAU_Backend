@@ -1,5 +1,6 @@
 package com.application.model;
 
+import ch.qos.logback.classic.db.names.TableName;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;

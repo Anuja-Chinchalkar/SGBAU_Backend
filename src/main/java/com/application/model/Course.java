@@ -19,6 +19,7 @@ public class Course
 	private String enrolledcount;
 	private String youtubeurl;
 	private String websiteurl;
+	private String driveurl;
 	private String coursetype;
 	private String skilllevel;
 	private String language;
@@ -29,23 +30,7 @@ public class Course
 		super();
 	}
 
-	public Course(int id, String coursename, String courseid, String enrolleddate, String instructorname, String instructorinstitution, String enrolledcount, String youtubeurl, String websiteurl, String coursetype, String skilllevel, String language, String description) 
-	{
-		super();
-		this.id = id;
-		this.coursename = coursename;
-		this.courseid = courseid;
-		this.enrolleddate = enrolleddate;
-		this.instructorname = instructorname;
-		this.instructorinstitution = instructorinstitution;
-		this.enrolledcount = enrolledcount;
-		this.youtubeurl = youtubeurl;
-		this.websiteurl = websiteurl;
-		this.coursetype = coursetype;
-		this.skilllevel = skilllevel;
-		this.language = language;
-		this.description = description;
-	}
+
 	
 	public int getId()
 	{
@@ -59,6 +44,18 @@ public class Course
 
 	public String getCoursename() {
 		return coursename;
+	}
+
+	public String getDriveurl() {
+		return driveurl;
+	}
+
+	public void setDriveurl(String driveurl) {
+		this.driveurl = driveurl;
+	}
+
+	public Course(int id) {
+		this.id = id;
 	}
 
 	public void setCoursename(String coursename) {

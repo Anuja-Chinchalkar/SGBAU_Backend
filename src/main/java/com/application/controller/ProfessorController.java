@@ -65,6 +65,14 @@ public class ProfessorController
 		List<Course> websiteCourseList = courseService.fetchByCoursetype("Website");
 		return new ResponseEntity<List<Course>>(websiteCourseList, HttpStatus.OK);
 	}
+
+	@GetMapping("/googledrivelist")
+	@CrossOrigin(origins = LoginController.ApiURL)
+	public ResponseEntity<List<Course>> getDriveCourseList() throws Exception
+	{
+		List<Course> driveList = courseService.fetchByCoursetype("GoogleDrive");
+		return new ResponseEntity<List<Course>>(driveList, HttpStatus.OK);
+	}
 	
 	@GetMapping("/courselistbyname/{coursename}")
 	@CrossOrigin(origins = LoginController.ApiURL)
