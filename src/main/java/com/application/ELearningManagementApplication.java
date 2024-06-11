@@ -8,6 +8,7 @@ public class ELearningManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ELearningManagementApplication.class, args);
+		System.out.println("Started");
 	}
 
 }

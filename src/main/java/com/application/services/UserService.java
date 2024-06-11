@@ -24,17 +24,17 @@ public class UserService
 	private static final String CURRENCY="INR";
 	@Autowired
 	private UserRepository userRepo;
-	@Autowired
-	private ReviewRepository reviewrepo;
-
-	public Review addReview(Review review){
-		return  reviewrepo.save(review);
-	}
-
-	public List<Review> getAllReview()
-	{
-		return (List<Review>)reviewrepo.findAll();
-	}
+//	@Autowired
+//	private ReviewRepository reviewrepo;
+//
+//	public Review addReview(Review review){
+//		return  reviewrepo.save(review);
+//	}
+//
+//	public List<Review> getAllReview()
+//	{
+//		return (List<Review>)reviewrepo.findAll();
+//	}
 	
 	public User saveUser(User user)
 	{

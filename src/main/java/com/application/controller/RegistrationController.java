@@ -89,6 +89,8 @@ public class RegistrationController
 	{
 		String currEmail = professor.getEmail();
 		String newID = getNewID();
+		String password=encrypt(professor.getPassword());
+		professor.setPassword(password);
 		professor.setProfessorid(newID);
 
 		if(currEmail != null || !"".equals(currEmail))

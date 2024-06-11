@@ -1,6 +1,5 @@
 package com.application.controller;
 
-import com.application.model.Review;
 import com.application.model.Wishlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,23 +71,23 @@ public class LoginController
 		return professorObj;
 	}
 
-	@PostMapping("/addReview")
-	@CrossOrigin(origins = ApiURL)
-	public String addReview(@RequestBody Review review) {
-		if(review==null){
-			System.out.println("null");
-		}
-			userService.addReview(review);
-			return "Review added successfully";
-	}
+//	@PostMapping("/addReview")
+//	@CrossOrigin(origins = ApiURL)
+//	public String addReview(@RequestBody Review review) {
+//		if(review==null){
+//			System.out.println("null");
+//		}
+//			userService.addReview(review);
+//			return "Review added successfully";
+//	}
 
-	@GetMapping("/getallreviews")
-	@CrossOrigin(origins = LoginController.ApiURL)
-	public ResponseEntity<List<Review>> getAllReviews() throws Exception
-	{
-		List<Review> rev = userService.getAllReview();
-		return new ResponseEntity<List<Review>>(rev, HttpStatus.OK);
-	}
-
+//	@GetMapping("/getallreviews")
+//	@CrossOrigin(origins = LoginController.ApiURL)
+//	public ResponseEntity<List<Review>> getAllReviews() throws Exception
+//	{
+//		List<Review> rev = userService.getAllReview();
+//		return new ResponseEntity<List<Review>>(rev, HttpStatus.OK);
+//	}
+//
 
 }
